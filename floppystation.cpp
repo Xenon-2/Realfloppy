@@ -101,7 +101,7 @@ void fs_i2c_on_rx_line(const char *line)
         g_active_motor_pin  = MOTOR_A_PIN;
         g_active_step_us    = 8000; // 8 ms for  5.25" 360K
         g_mode_changed      = true; // Force recalibrate
-        g_mode_drive        = 2;    // 1 = 5.25" - 2 = 3.5" 
+        g_mode_drive        = 1;    // 1 = 5.25" - 2 = 3.5" 
         return;
     }
     if (strcmp(line, "CMD:SET_DRIVE:B") == 0)
@@ -112,7 +112,7 @@ void fs_i2c_on_rx_line(const char *line)
         g_active_motor_pin  = MOTOR_B_PIN;
         g_active_step_us    = 3000; // 3 ms for 3.5"
         g_mode_changed      = true; // Force recalibrate
-        g_mode_drive        = 1;    // 1 = 5.25" - 2 = 3.5" 
+        g_mode_drive        = 2;    // 1 = 5.25" - 2 = 3.5" 
         return;
     }
     if (strcmp(line, "CMD:SET_MODE:RF") == 0)
