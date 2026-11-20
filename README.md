@@ -88,6 +88,17 @@ Used for high-speed communication with the **Realfloppy** client and the **IBM51
 
 #### Arduino Mega + Touchscreen Display (I2C1 Slave @ `0x42`)
 Used as the UI controller to switch modes (`Realfloppy`, `Greaseweazle`, `Floppystation`), select drives (`A:` / `B:`), and browse SD images.
+#### Touchscreen Display Shield (Arduino Mega)
+The UI uses a standard **3.2" TFT LCD Shield (ITDB32S / SSD1289 / ILI9341)** with an **XPT2046** touch controller plugged directly onto the Arduino Mega 2560 (using the `UTFT` library):
+
+| Signal / Function | Arduino Mega Pin | Notes |
+| :--- | :--- | :--- |
+| **LCD Control (`RS, WR, CS, RST`)** | `38, 39, 40, 41` | Standard 16-bit TFT Mega Shield pinout |
+| **Touch `T_IRQ`** | `D2` | Touch Interrupt |
+| **Touch `T_DOUT`** | `D3` | Touch Data Out |
+| **Touch `T_DIN`** | `D4` | Touch Data In |
+| **Touch `T_CS`** | `D5` | Touch Chip Select |
+| **Touch `T_CLK`** | `D6` | Touch Clock |
 
 | Raspberry Pi Pico | Arduino Mega | Function |
 | :--- | :--- | :--- |
