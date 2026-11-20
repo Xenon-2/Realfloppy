@@ -100,11 +100,12 @@ Used as the UI controller to switch modes (`Realfloppy`, `Greaseweazle`, `Floppy
 
 
 ## Available Versions
-Currently, there are two ready-to-use setups in this repository but both share the same .elf :
-1. **Greaseweazle Device:** Works with the official Greaseweazle tools. Requires only a Raspberry Pi Pico 1 or Pico 2.
-2. **Floppystation:** Implements the Greaseweazle protocol, Realfloppy protocol, and a standalone Floppystation mode controlled via a touchscreen display.
+Currently, there are two ready-to-use hardware setups in this repository, both sharing the same `.uf2` firmware (depending on whether you use a Pico 1 or Pico 2):
+1. **Greaseweazle Device (Boot Default):** Works out-of-the-box with official Greaseweazle host tools. Requires only a Raspberry Pi Pico 1 or Pico 2.
+2. **Floppystation (Full Setup):** Starts in Greaseweazle mode by default and allows switching via the touchscreen display to Realfloppy mode or standalone Floppystation mode (SD card read/write).
 
 Both systems work seamlessly with both 3.5" and 5.25" floppy drives.
+
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
