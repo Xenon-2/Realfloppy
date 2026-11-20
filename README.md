@@ -13,6 +13,7 @@ A Floppystation and Realfloppy interface based on the Raspberry Pi Pico 1 or Pic
 - **Full version (Realfloppy + Floppystation + Greaseweazle):**
   - Raspberry Pi Pico 1 or Pico 2
   - 1x FT232RL USB-to-Serial adapter
+  - 1x SPI MicroSD Card module
   - 1x Arduino with a touchscreen display
 
 ## Project Background & Story
@@ -95,6 +96,8 @@ Used as the UI controller to switch modes (`Realfloppy`, `Greaseweazle`, `Floppy
 | **GND** | `GND` | Common Ground |
 
 > **Voltage Level Warning:** The Arduino Mega operates at **5V** logic while the Raspberry Pi Pico operates at **3.3V**. Use a bidirectional **I2C logic level shifter (3.3V <-> 5V)** on `SDA` and `SCL` to protect the Pico pins.
+>
+
 
 ## Available Versions
 Currently, there are two ready-to-use setups in this repository but both share the same .elf :
@@ -102,3 +105,6 @@ Currently, there are two ready-to-use setups in this repository but both share t
 2. **Floppystation:** Implements the Greaseweazle protocol, Realfloppy protocol, and a standalone Floppystation mode controlled via a touchscreen display.
 
 Both systems work seamlessly with both 3.5" and 5.25" floppy drives.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
