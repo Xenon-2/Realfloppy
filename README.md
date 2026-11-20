@@ -28,6 +28,74 @@ Once that was done, I wanted a new challenge: building a low-cost Greaseweazle i
 
 That's how I created my own lightweight Greaseweazle implementation—without even using PIO state machines or DMA—that runs smoothly on both Pico 1 and Pico 2, while also integrating "Realfloppy" and standalone Floppystation capabilities.
 
+
+## Wiring & Pinout
+
+### 1. Floppy Drive Interface (34-Pin IDC Connector)
+This connection is **required for both versions** (Greaseweazle-only and Full Floppystation). All floppy control signals are active-low.
+
+| Raspberry Pi Pico | Floppy IDC Pin | Signal Name | Direction | Notes |
+| :--- | :--- | :--- | :--- | :--- |
+| **GP1** | Pin 2 | `/DENSITY` | Output | Density Select (LOW = DD) |
+| **GP2** | Pin 8 | `/INDEX` | Input | Index Pulse |
+| **GP22** | Pin 10 | `/MOTOR_A` | Output | Motor Enable Drive A (5.25" 360K) |
+| **GP3** | Pin 12 | `/SELECT_B` | Output | Drive Select B (3.5") - *Default* |
+| **GP28** | Pin 14 | `/SELECT_A` | Output | Drive Select A (5.25" 360K) |
+| **GP4** | Pin 16 | `/MOTOR_B` | Output | Motor Enable Drive B (3.5") |
+| **GP5** | Pin 18 | `/DIR` | Output | Step Direction |
+| **GP6** | Pin 20 | `/STEP` | Output | Step Pulse |
+| **GP7** | Pin 22 | `/WRDATA` | Output | Write Data |
+| **GP8** | Pin 24 | `/WRGATE` | Output | Write Gate |
+| **GP9** | Pin 26 | `/TRK0` | Input | Track 00 Sensor |
+| **GP10** | Pin 28 | `/PROT` | Input | Write Protect Sensor |
+| **GP11** | Pin 30 | `/READ` | Input | Read Data |
+| **GP12** | Pin 32 | `/SIDE` | Output | Side / Head Select |
+| **GP13** | Pin 34 | `/READY` | Input | Disk Change / Ready |
+| **GND** | Odd Pins (1–33) | `GND` | Common | Connect multiple odd pins to Pico GND |
+
+> **Hardware Note:** 
+> - If you only use a **single drive** in the Greaseweazle-only version, connect it to **Drive B** (`GP3` / `GP4`), as it is the fail-safe default at boot.
+> - Floppy drives require an external **+5V** (and **+12V** for 5.25" drives) power supply. Share a common **GND** between the floppy PSU and the Pico.
+
+---
+
+### 2. Full Version Peripherals (Floppystation & Realfloppy)
+If you are building the full version, connect the following modules to the Raspberry Pi Pico:
+
+#### SD Card Module (SPI0)
+
+| Raspberry Pi Pico | SD Card Module | Function |
+| :--- | :--- | :--- |
+| **GP16** | `MISO` | SPI0 RX |
+| **GP17** | `CS` | Chip Select |
+| **GP18** | `SCK` | SPI0 Clock |
+| **GP19** | `MOSI` | SPI0 TX |
+| **3V3 (OUT)** | `VCC` | 3.3V Power |
+| **GND** | `GND` | Ground |
+
+#### FT232RL USB-to-Serial Adapter (UART1 @ 2,000,000 baud)
+Used for high-speed communication with the **Realfloppy** client and the **IBM5150-emulator**.
+
+| Raspberry Pi Pico | FT232RL Pin | Function |
+| :--- | :--- | :--- |
+| **GP20** | `RXD` | Pico TX -> Adapter RX |
+| **GP21** | `TXD` | Pico RX <- Adapter TX |
+| **GP26** | `CTS#` | Hardware Flow Control (Active Low) |
+| **GND** | `GND` | Ground |
+
+> **Important:** Set the FT232RL voltage jumper to **3.3V** to safely interface with the Pico GPIO pins.
+
+#### Arduino Mega + Touchscreen Display (I2C1 Slave @ `0x42`)
+Used as the UI controller to switch modes (`Realfloppy`, `Greaseweazle`, `Floppystation`), select drives (`A:` / `B:`), and browse SD images.
+
+| Raspberry Pi Pico | Arduino Mega | Function |
+| :--- | :--- | :--- |
+| **GP14** | `SDA` (Pin 20) | I2C1 Data |
+| **GP15** | `SCL` (Pin 21) | I2C1 Clock |
+| **GND** | `GND` | Common Ground |
+
+> **Voltage Level Warning:** The Arduino Mega operates at **5V** logic while the Raspberry Pi Pico operates at **3.3V**. Use a bidirectional **I2C logic level shifter (3.3V <-> 5V)** on `SDA` and `SCL` to protect the Pico pins.
+
 ## Available Versions
 Currently, there are two ready-to-use setups in this repository but both share the same .elf :
 1. **Greaseweazle Device:** Works with the official Greaseweazle tools. Requires only a Raspberry Pi Pico 1 or Pico 2.
