@@ -120,3 +120,16 @@ Both systems work seamlessly with both 3.5" and 5.25" floppy drives.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Gallery & Hardware Builds
+
+### Minimalist Greaseweazle Build (Pico 1 / Pico 2 Only)
+All you need is a Raspberry Pi Pico 1 or Pico 2 and a 34-pin IDC header soldered on a simple perfboard—no extra components required.
+
+![Minimalist Greaseweazle Build](gw_minimal.png)
+
+### Full Floppystation & Realfloppy Build
+Complete build featuring the Pico controller, SPI MicroSD module, FT232RL USB-to-Serial adapter, dual 5.25" + 3.5" drives, external +5V/+12V power rails, and the Arduino Mega touchscreen interface.
+
+![Floppystation Full Build & UI](floppystation_build.png)
+
